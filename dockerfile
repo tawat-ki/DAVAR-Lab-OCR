@@ -21,10 +21,6 @@ RUN pip install nltk lmdb editdistance opencv-python requests onnx SharedArray t
 RUN pip install mmcv-full==1.3.4
 RUN pip install mmdet==2.11.0
 
-# RUN git clone https://github.com/hikopensource/DAVAR-Lab-OCR.git
-# WORKDIR /app/DAVAR-Lab-OCR
-# RUN git checkout 0.6.0
-
 RUN git clone https://github.com/tawat-ki/DAVAR-Lab-OCR.git
 WORKDIR /app/DAVAR-Lab-OCR
 RUN git checkout docker
@@ -57,9 +53,6 @@ WORKDIR /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindi
 RUN cmake ..
 RUN make
 
-# COPY ./davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/pytorch_binding/setup.py /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/pytorch_binding
-# COPY ./davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/CMakeLists.txt /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/
-# COPY ./davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/CMakeLists.txt /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/wtf.txt
 WORKDIR /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/pytorch_binding
 RUN python3 setup.py install
 WORKDIR /app
