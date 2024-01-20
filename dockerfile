@@ -1,5 +1,6 @@
 # FROM ubuntu:20.04
-FROM nvidia/cuda:12.3.1-devel-ubuntu20.04
+FROM nvidia/cuda:11.6.1-devel-ubuntu20.04
+
 
 # Set the working directory to /app
 WORKDIR /app
@@ -20,9 +21,13 @@ RUN pip install nltk lmdb editdistance opencv-python requests onnx SharedArray t
 RUN pip install mmcv-full==1.3.4
 RUN pip install mmdet==2.11.0
 
-RUN git clone https://github.com/hikopensource/DAVAR-Lab-OCR.git
+# RUN git clone https://github.com/hikopensource/DAVAR-Lab-OCR.git
+# WORKDIR /app/DAVAR-Lab-OCR
+# RUN git checkout 0.6.0
+
+RUN git clone https://github.com/tawat-ki/DAVAR-Lab-OCR.git
 WORKDIR /app/DAVAR-Lab-OCR
-RUN git checkout 0.6.0
+RUN git checkout docker
 
 RUN python3 setup.py develop
 RUN g++ -shared -o ./davarocr/davar_det/datasets/pipelines/lib/tp_data.so -fPIC ./davarocr/davar_det/datasets/pipelines/lib/tp_data.cpp -I/usr/include/opencv4
@@ -31,7 +36,7 @@ RUN g++ -shared -o ./davarocr/davar_det/core/post_processing/lib/tp_points_gener
 RUN g++ -shared -o ./davarocr/davar_det/core/post_processing/lib/east_postprocess.so -fPIC ./davarocr/davar_det/core/post_processing/lib/east_postprocess.cpp -I/usr/include/opencv4
 RUN g++ -shared -o ./davarocr/davar_spotting/core/post_processing/lib/bfs_search.so -fPIC ./davarocr/davar_spotting/core/post_processing/lib/bfs_search.cpp -I/usr/include/opencv4
 RUN g++ -shared -o ./davarocr/davar_table/datasets/pipelines/lib/gpma_data.so -fPIC ./davarocr/davar_table/datasets/pipelines/lib/gpma_data.cpp -I/usr/include/opencv4
-RUN apt install -y vim cmake
+RUN apt install -y cmake
 
 # if cuda version -ge 11
 WORKDIR /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/
@@ -52,9 +57,10 @@ WORKDIR /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindi
 RUN cmake ..
 RUN make
 
-COPY ./davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/pytorch_binding/setup.py /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/pytorch_binding
+# COPY ./davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/pytorch_binding/setup.py /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/pytorch_binding
 # COPY ./davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/CMakeLists.txt /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/
 # COPY ./davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/CMakeLists.txt /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/wtf.txt
 WORKDIR /app/DAVAR-Lab-OCR/davarocr/davar_rcg/third_party/warp-ctc-pytorch_bindings/pytorch_binding
 RUN python3 setup.py install
 WORKDIR /app
+RUN apt install neovim -y
