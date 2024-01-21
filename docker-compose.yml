@@ -1,0 +1,22 @@
+services:
+  mycudaapp:
+    build:
+      context: .
+    ports:
+      - "8888:8888"  # Map host port 8888 to container port 8888 for Jupyter Notebook
+      - "8889:8889"  # Map host port 8888 to container port 8888 for Jupyter Notebook
+    volumes:
+      - ./test_lpgma.ipynb:/app/test_lpgma.ipynb
+      - ./config_lgpma.py:/app/config_lgpma.py
+      - ./maskrcnn-lgpma-pub-e12-pub.pth:/app/maskrcnn-lgpma-pub-e12-pub.pth 
+      - ./test.img:/test.img 
+    command: ["sleep", "infinity"]
+        # command: ["jupyter", "lab", "--allow-root","--ip=0.0.0.0"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
