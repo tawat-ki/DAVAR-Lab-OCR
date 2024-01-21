@@ -10,7 +10,7 @@
 """
 from mmcv.runner.hooks import HOOKS
 from mmcv.runner import LrUpdaterHook
-from torch import inf
+from torch._six import inf
 
 
 @HOOKS.register_module()

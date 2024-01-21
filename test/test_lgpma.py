@@ -1,6 +1,5 @@
 from  davarocr.davar_common.apis import inference_model, init_model
 import torch
-import torch
 from mmdet.datasets.pipelines import Compose
 import numpy as np
 import cv2
