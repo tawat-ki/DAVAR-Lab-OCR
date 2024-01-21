@@ -7,7 +7,6 @@ from mmcv.parallel import collate, scatter
 import os
 root_path = '/'.join(__file__.split('/')[:-1])
 
-config_path = os.path.join(root_path,"..","demo/table_recognition/lgpma/configs/lgpma_pub.py")
 config_path = "/app/DAVAR-Lab-OCR/demo/table_recognition/lgpma/configs/lgpma_pub.py"
 model_path = os.path.join(root_path,'maskrcnn-lgpma-pub-e12-pub.pth')
 img_path = os.path.join(root_path,'test.jpg')
