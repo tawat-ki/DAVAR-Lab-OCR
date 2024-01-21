@@ -13,3 +13,5 @@ RUN git clone https://github.com/tawat-ki/DAVAR-Lab-OCR.git
 WORKDIR /app/DAVAR-Lab-OCR
 RUN git checkout docker
 RUN bash setup.sh
+RUN pip install numpy>=1.20
+
