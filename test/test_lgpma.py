@@ -7,7 +7,8 @@ from mmcv.parallel import collate, scatter
 import os
 root_path = '/'.join(__file__.split('/')[:-1])
 
-config_path = os.path.join(root_path,'config_lpgma.py')
+config_path = os.path.join(root_path,"..","demo/table_recognition/lgpma/configs/lgpma_pub.py")
+config_path = "/app/DAVAR-Lab-OCR/demo/table_recognition/lgpma/configs/lgpma_pub.py"
 model_path = os.path.join(root_path,'maskrcnn-lgpma-pub-e12-pub.pth')
 img_path = os.path.join(root_path,'test.jpg')
 
@@ -30,7 +31,7 @@ def test_model():
     with torch.no_grad():
         result = model(return_loss=False, rescale=True, **data)
     assert len(result[0].keys()) == 2, "wrong result"
-    assert len(result[0]['content_ann'].keys()) == 2, "results don't have content_ann"
+    assert len(result[0]['content_ann'].keys()) == 3, "results don't have content_ann"
 
 def test_inference_model():
     global config_path, model_path, img_path 
@@ -38,5 +39,5 @@ def test_inference_model():
     imgs = {'img':cv2.imread(img_path)}
     result = inference_model(model,imgs)
     assert len(result[0].keys()) == 2, "wrong result"
-    assert len(result[0]['content_ann'].keys()) == 2, "results don't have content_ann"
+    assert len(result[0]['content_ann'].keys()) == 3, "results don't have content_ann"
 
